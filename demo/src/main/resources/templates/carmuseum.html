@@ -7,16 +7,20 @@
 <body>
     <h1>Welcome to the Car Museum</h1>
     <table>
+		<thead>
         <tr>
             <th>Brand</th>
             <th>Model</th>
             <th>Year</th>
         </tr>
+        </thead>
+        <tbody>
         <tr th:each="car : ${cars}">
             <td th:text="${car.brand}"></td>
             <td th:text="${car.model}"></td>
             <td th:text="${car.year}"></td>
         </tr>
+        </tbody>
     </table>
 </body>
 </html>

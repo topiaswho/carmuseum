@@ -1,9 +1,19 @@
 package com.example.demo.domain;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public class Car {
-	
-	private String brand;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String brand;
     private String model;
+    @Column(name = "release_year")
     private int year;
     
     public Car() {
@@ -19,6 +29,14 @@ public class Car {
         this.year = year;
 
     }
+
+	public Long getId() {
+		return id;
+	}
+  
+	public Long setId() {
+		return id;
+	}
 
 	public String getBrand() {
 		return brand;
@@ -46,7 +64,10 @@ public class Car {
 
 	@Override
 	public String toString() {
-		return "Car [brand=" + brand + ", model=" + model + ", year=" + year + "]";
+		return "Car [id=" + id + ", brand=" + brand + ", model=" + model + ", year=" + year + "]";
 	}
+
+
+
     
 }
