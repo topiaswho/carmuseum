@@ -6,12 +6,14 @@
 </head>
 <body>
     <h1>Welcome to the Car Museum</h1>
+    <a th:href="@{/add}">Add a New Car</a>
     <table>
 		<thead>
         <tr>
             <th>Brand</th>
             <th>Model</th>
             <th>Year</th>
+            <th>Delete</th>
         </tr>
         </thead>
         <tbody>
@@ -19,6 +21,7 @@
             <td th:text="${car.brand}"></td>
             <td th:text="${car.model}"></td>
             <td th:text="${car.year}"></td>
+            <td><a th:href="@{/delete/{id}(id=${car.id})}" class="btn btn-xs btn-danger">Delete</a></td>
         </tr>
         </tbody>
     </table>
