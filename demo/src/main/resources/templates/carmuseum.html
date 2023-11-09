@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+	<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
 <head>
     <meta charset="UTF-8">
     <title>Car Museum</title>
@@ -7,13 +8,15 @@
 <body>
     <h1>Welcome to the Car Museum</h1>
     <a th:href="@{/add}">Add a New Car</a>
-    <table>
-		<thead>
+<a th:href="@{/locationlist}">Locations</a>
+<table class="table table-striped">
+			<thead>
         <tr>
             <th>Brand</th>
             <th>Model</th>
             <th>Year</th>
-            <th>Delete</th>
+            <th>Location</th>
+
         </tr>
         </thead>
         <tbody>
@@ -21,7 +24,11 @@
             <td th:text="${car.brand}"></td>
             <td th:text="${car.model}"></td>
             <td th:text="${car.year}"></td>
+            <td th:text="${car.location.locationName}"></td>
+
             <td><a th:href="@{/delete/{id}(id=${car.id})}" class="btn btn-xs btn-danger">Delete</a></td>
+            <td><a th:href="@{/edit/{id}(id=${car.id})}" class="btn btn-xs btn-danger">Edit</a></td>
+
         </tr>
         </tbody>
     </table>
