@@ -3,6 +3,7 @@ package com.example.demo.web;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,13 +48,14 @@ public class CarController {
         return "redirect:/carmuseum";
     }
     
-
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/delete/{id}")
     public String deleteCar(@PathVariable Long id) {
         carRepository.deleteById(id);
         return "redirect:/carmuseum";
     }
     
+    @PreAuthorize("hasAuthority('USER')")
     @GetMapping("/edit/{id}")
     public String editCar(@PathVariable Long id, Model model) {
         Car car = carRepository.findById(id).orElse(null);
@@ -68,7 +70,9 @@ public class CarController {
     @PostMapping("/updatecar")
     public String updateCar(@ModelAttribute Car car) {
         carRepository.save(car);
-        return "redirect:/carmuseum"; // Redirect to the car museum page
+        return "redirect:/carmuseum"; 
     }
+    
+
 
 }

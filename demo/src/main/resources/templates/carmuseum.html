@@ -1,14 +1,30 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 	<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
 <head>
     <meta charset="UTF-8">
     <title>Car Museum</title>
 </head>
 <body>
-    <h1>Welcome to the Car Museum</h1>
+    <h1>Welcome to the Car Museum database, <span sec:authentication="name"></span>!</h1>
     <a th:href="@{/add}">Add a New Car</a>
 <a th:href="@{/locationlist}">Locations</a>
+
+<!-- logout link -->
+    <a th:href="@{/logout}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+        <form id="logout-form" th:action="@{/logout}" method="post" style="display: none;">
+        <!-- This hidden form is used to trigger the logout process -->
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+    </form>
+    
+    <!-- login link -->
+    <a th:href="@{/login}" onclick="event.preventDefault(); document.getElementById('login-form').submit();">Login</a>
+    <form id="login-form" th:action="@{/login}" method="post" style="display: none;">
+        <!-- This hidden form is used to trigger the logout process -->
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+    </form>
+    
+    
 <table class="table table-striped">
 			<thead>
         <tr>
@@ -26,7 +42,9 @@
             <td th:text="${car.year}"></td>
             <td th:text="${car.location.locationName}"></td>
 
-            <td><a th:href="@{/delete/{id}(id=${car.id})}" class="btn btn-xs btn-danger">Delete</a></td>
+            <td sec:authorize="hasAuthority('ADMIN')">
+				<a th:href="@{/delete/{id}(id=${car.id})}" class="btn btn-xs btn-danger">Delete</a></td>
+				<td sec:authorize="hasAuthority('USER')">
             <td><a th:href="@{/edit/{id}(id=${car.id})}" class="btn btn-xs btn-danger">Edit</a></td>
 
         </tr>

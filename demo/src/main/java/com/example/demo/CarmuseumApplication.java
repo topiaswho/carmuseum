@@ -12,14 +12,16 @@ import com.example.demo.domain.CarRepository;
 
 import com.example.demo.domain.Location;
 import com.example.demo.domain.LocationRepository;
+import com.example.demo.domain.User;
+import com.example.demo.domain.UserRepository;
 
 @SpringBootApplication
 public class CarmuseumApplication {
 
-	public static void main(String[] args) {
-		final Logger log = LoggerFactory.getLogger(CarmuseumApplication.class);
-		SpringApplication.run(CarmuseumApplication.class, args);
-	}
+	private static final Logger log = LoggerFactory.getLogger(CarmuseumApplication.class);
+    public static void main(String[] args) {
+        SpringApplication.run(CarmuseumApplication.class, args);
+    }
 	
 	 @Bean
 	    public CommandLineRunner locationdemo(LocationRepository LocationRepo) {
@@ -34,7 +36,9 @@ public class CarmuseumApplication {
 	@Bean
 	public CommandLineRunner cardemo(
 			CarRepository CarRepo,
-			LocationRepository LocationRepo ) {
+			LocationRepository LocationRepo,
+			UserRepository userRepository
+			) {
 		return (args) -> {
 			
 			Location l1 = LocationRepo.findByLocationName("Kuopio");
@@ -48,6 +52,16 @@ public class CarmuseumApplication {
 			
 			CarRepo.save(c1);
 			CarRepo.save(c2);
+			
+            User user1 = new User("user", "$2a$10$nThzA3dYU69I37hBPhGWeeo8tKCJRMu2mQT34h4Ruxn9M2.V4hxjG", "USER");
+            User user2 = new User("admin", "$2a$10$pS3lLe8CodChjSOxcM7avuSe5/MiX74w106girye0o65xU8FS6iy.", "ADMIN");
+            userRepository.save(user1);
+            userRepository.save(user2);
+            
+            log.info("fetch all users");
+			for (User user : userRepository.findAll()) {
+				log.info(user.toString());
+			}
 		};
 	}
 }
