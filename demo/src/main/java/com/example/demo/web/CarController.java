@@ -57,6 +57,7 @@ public class CarController {
     @GetMapping("/edit/{id}")
     public String editCar(@PathVariable Long id, Model model) {
         Car car = carRepository.findById(id).orElse(null);
+        model.addAttribute("locations", locationRepository.findAll());
         if (car != null) {
             model.addAttribute("car", car);
             return "editcar";

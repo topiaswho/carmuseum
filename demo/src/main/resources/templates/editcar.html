@@ -18,6 +18,12 @@
         <label for="year">Year:</label>
         <input type="number" id="year" name="year" th:field="*{year}" required><br>
         
+                <label for="location">Locations</label>
+        <select id="location" th:field="*{location}" class="form-control">
+            <option th:each="location: ${locations}" th:value="${location.locationid}" th:text="${location.locationName}">
+            </option>
+        </select>
+        
         <button type="submit">Save Changes</button>
     </form>
     <a th:href="@{/carmuseum}">Back to the front page</a>
