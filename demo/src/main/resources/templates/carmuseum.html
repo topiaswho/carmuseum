@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
-	<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+	<link type="text/css" rel="stylesheet" href="/static/css/bootstrap.min.css" th:href="@{/static/css/bootstrap.min.css}" />
 <head>
     <meta charset="UTF-8">
     <title>Car Museum</title>
 </head>
 <body>
     <h1>Welcome to the Car Museum database, <span sec:authentication="name"></span>!</h1>
+    <h3>Here you can see all the data of our cars</h3>
     <a th:href="@{/add}">Add a New Car</a>
 <a th:href="@{/locationlist}">Locations</a>
+<a th:href="@{/ownerlist}">Owners</a>
 
 <!-- logout link -->
     <a th:href="@{/logout}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
@@ -32,6 +34,7 @@
             <th>Model</th>
             <th>Year</th>
             <th>Location</th>
+            <th>Owner</th>
 
         </tr>
         </thead>
@@ -41,10 +44,11 @@
             <td th:text="${car.model}"></td>
             <td th:text="${car.year}"></td>
             <td th:text="${car.location.locationName}"></td>
+            <td th:text="${car.owner.ownerName}"></td>
 
             <td sec:authorize="hasAuthority('ADMIN')">
 				<a th:href="@{/delete/{id}(id=${car.id})}" class="btn btn-xs btn-danger">Delete</a></td>
-				<td sec:authorize="hasAuthority('USER')">
+				<td sec:authorize="hasAuthority('ADMIN')">
             <td><a th:href="@{/edit/{id}(id=${car.id})}" class="btn btn-xs btn-danger">Edit</a></td>
 
         </tr>

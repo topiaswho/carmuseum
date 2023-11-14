@@ -15,6 +15,7 @@ import com.example.demo.domain.Car;
 import com.example.demo.domain.CarRepository;
 import com.example.demo.domain.Location;
 import com.example.demo.domain.LocationRepository;
+import com.example.demo.domain.OwnerRepository;
 
 @Controller
 public class CarController {
@@ -24,6 +25,9 @@ public class CarController {
     
     @Autowired
     private LocationRepository locationRepository;
+    
+    @Autowired
+    private OwnerRepository ownerRepository;
 	
 	@GetMapping("/carmuseum")
     public String index(Model model) {
@@ -36,6 +40,7 @@ public class CarController {
 	public String addCarForm(Model model) {
         model.addAttribute("car", new Car());
         model.addAttribute("locations", locationRepository.findAll());
+        model.addAttribute("owners", ownerRepository.findAll());
         return "addcar";
     }
 	
@@ -55,11 +60,12 @@ public class CarController {
         return "redirect:/carmuseum";
     }
     
-    @PreAuthorize("hasAuthority('USER')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/edit/{id}")
     public String editCar(@PathVariable Long id, Model model) {
         Car car = carRepository.findById(id).orElse(null);
         model.addAttribute("locations", locationRepository.findAll());
+        model.addAttribute("owners", ownerRepository.findAll());
         if (car != null) {
             model.addAttribute("car", car);
             return "editcar";

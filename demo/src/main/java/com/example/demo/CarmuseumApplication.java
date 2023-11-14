@@ -12,6 +12,8 @@ import com.example.demo.domain.CarRepository;
 
 import com.example.demo.domain.Location;
 import com.example.demo.domain.LocationRepository;
+import com.example.demo.domain.Owner;
+import com.example.demo.domain.OwnerRepository;
 import com.example.demo.domain.User;
 import com.example.demo.domain.UserRepository;
 
@@ -24,20 +26,27 @@ public class CarmuseumApplication {
     }
 	
 	 @Bean
-	    public CommandLineRunner locationdemo(LocationRepository LocationRepo) {
+	    public CommandLineRunner locationdemo(LocationRepository LocationRepo, OwnerRepository ownerRepository) {
 	        return (args) -> {
 	            Location l1 = new Location("Kuopio");
 	            Location l2 = new Location("Helsinki");
 
 	            LocationRepo.save(l1);
 	            LocationRepo.save(l2);
+	            
+	            Owner o1 = new Owner("Valtionkonttori");
+				Owner o2 = new Owner("Kimmo Käki");
+				
+				ownerRepository.save(o1);
+				ownerRepository.save(o2);
 	        };
 	 }
 	@Bean
 	public CommandLineRunner cardemo(
 			CarRepository CarRepo,
 			LocationRepository LocationRepo,
-			UserRepository userRepository
+			UserRepository userRepository,
+			OwnerRepository ownerRepository
 			) {
 		return (args) -> {
 			
@@ -47,8 +56,16 @@ public class CarmuseumApplication {
 			LocationRepo.save(l1);
 			LocationRepo.save(l2);
 			
-			Car c1 = new Car("Mercedes-benz", "230SL", 1967, l1);
-			Car c2 = new Car("BMW", "CSL", 1972, l2);
+			Owner o1 = ownerRepository.findByOwnerName("Valtionkonttori");
+			Owner o2 = ownerRepository.findByOwnerName("Kimmo Käki");
+			
+			ownerRepository.save(o1);
+			ownerRepository.save(o2);
+			
+			
+			
+			Car c1 = new Car("Mercedes-benz", "230SL", 1967, l1, o1);
+			Car c2 = new Car("BMW", "CSL", 1972, l2, o2);
 			
 			CarRepo.save(c1);
 			CarRepo.save(c2);

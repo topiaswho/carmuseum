@@ -24,6 +24,12 @@
             </option>
         </select>
         
+                        <label for="owner">Owners</label>
+        <select id="owner" th:field="*{owner}" class="form-control">
+            <option th:each="owner: ${owners}" th:value="${owner.ownerid}" th:text="${owner.ownerName}">
+            </option>
+        </select>
+        
         <button type="submit">Save Changes</button>
     </form>
     <a th:href="@{/carmuseum}">Back to the front page</a>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Owner List</title>
+</head>
+<body>
+    <h1>Ownerlist</h1>
+    <a th:href="@{/carmuseum}">Back to the car museum</a>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Owner ID</th>
+                <th>Owner's name</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="owner : ${owners}">
+                <td th:text="${owner.ownerid}"></td>
+                <td th:text="${owner.ownerName}"></td>
+                
+                <td><a th:href="@{/deleteowner/{id}(id=${owner.ownerid})}" class="btn btn-xs btn-danger">Delete</a></td>
+            
+            </tr>
+        </tbody>
+    </table>
+    <a th:href="@{/addowner}">Add owners</a>
+</body>
+</html>

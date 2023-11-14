@@ -24,6 +24,12 @@
             <option th:each="location: ${locations}" th:value="${location.locationid}" th:text="${location.locationName}">
             </option>
         </select>
+        
+        <label for="owner">Owners</label>
+        <select id="owner" th:field="*{owner}" class="form-control">
+            <option th:each="owner: ${owners}" th:value="${owner.ownerid}" th:text="${owner.ownerName}">
+            </option>
+        </select>
 
         <input type="submit" value="Add car" />
 

@@ -23,20 +23,25 @@ public class Car {
     @ManyToOne
     @JoinColumn(name = "locationid")
     private Location location;
+    @ManyToOne
+    @JoinColumn(name = "ownerid")
+    private Owner owner;
     
     public Car() {
         this.brand = null;
         this.model = null;
         this.year = 0;
         this.location = null;
+        this.owner = null;
 
     }
     
-    public Car(String brand, String model, int year, Location location) {
+    public Car(String brand, String model, int year, Location location, Owner owner) {
         this.brand = brand;
         this.model = model;
         this.year = year;
         this.location = location;
+        this.owner = owner;
 
     }
 
@@ -79,11 +84,18 @@ public class Car {
 	public void setLocation(Location location) {
         this.location = location;
     }
+	public Owner getOwner() {
+        return owner;
+    }
+	
+	public void setOwner(Owner owner) {
+        this.owner = owner;
+    }
 	
 	@Override
 	public String toString() {
 		if (this.location != null) {
-		return "Car [id=" + id + ", brand=" + brand + ", model=" + model + ", year=" + this.getLocation() + "]";
+		return "Car [id=" + id + ", brand=" + brand + ", model=" + model + ", year=" + this.getLocation() + this.getOwner() + "]";
 	} else {
 		return "Car [id=" + id + ", brand=" + brand + ", model=" + model + ", year=" + "]";
 	}
