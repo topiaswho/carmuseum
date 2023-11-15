@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
 import com.example.demo.domain.Car;
 import com.example.demo.domain.CarRepository;
 
@@ -19,17 +18,23 @@ import com.example.demo.domain.CarRepository;
 @Controller
 public class CarRestController {
 
-	
-	@Autowired
-	private CarRepository carRepository;
-	
-    @RequestMapping(value="/cars", method = RequestMethod.GET)
-    public @ResponseBody List<Car> carlistrest() {	
+    // Autowired CarRepository for accessing car data
+    @Autowired
+    private CarRepository carRepository;
+
+    // Handles GET requests for retrieving a list of all cars
+    @RequestMapping(value = "/cars", method = RequestMethod.GET)
+    public @ResponseBody List<Car> carlistrest() {
+        
+    	// Retrieves and returns a list of all cars from the repository
         return (List<Car>) carRepository.findAll();
-    } 
-    
-    @RequestMapping(value="/cars/{id}", method = RequestMethod.GET)
-    public @ResponseBody Optional<Car> findbookrest(@PathVariable("id") Long carId) {	
+    }
+
+    // Handles GET requests for retrieving a specific car by ID
+    @RequestMapping(value = "/cars/{id}", method = RequestMethod.GET)
+    public @ResponseBody Optional<Car> findbookrest(@PathVariable("id") Long carId) {
+        
+    	// Retrieves and returns a specific car by its ID from the repository
         return carRepository.findById(carId);
-    }  
+    }
 }
