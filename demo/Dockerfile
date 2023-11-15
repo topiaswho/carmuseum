@@ -1,16 +1,17 @@
 #
-# Mvn Build
+# Mvn Build Stage
 #
 FROM maven:3.8.6-eclipse-temurin-17-focal AS build
+WORKDIR /home/app
 COPY src /home/app/src
 COPY pom.xml /home/app
-RUN mvn -f /home/app/pom.xml clean package
+RUN mvn clean package
 
 #
-# Jar Package
+# Jar Package Stage
 #
 FROM eclipse-temurin:17-jre-focal
-# demo-0.0.1-SNAPSHOT.jar  = <artifactId>-<version>.jar (pom.xml)
+WORKDIR /usr/local/lib
 COPY --from=build /home/app/target/demo-0.0.1-SNAPSHOT.jar /usr/local/lib/carmuseum.jar
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "/usr/local/lib/carmuseum.jar"]
